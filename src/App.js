@@ -6,10 +6,12 @@ function App() {
     const [text, setText] = useState("");
     const [timer, setTimer] = useState(5);
     const [isRunning, setIsRunning] = useState(false);
+    const [count, setCount] = useState(0);
  
     const wordCounter = (text) => {
       const wordArr = text.trim().split(' ');
-      return wordArr.filter(word => word !== '').length;
+      const wordCount = wordArr.filter(word => word !== '').length;
+      setCount(wordCount);
     };
     
     useEffect(() => { 
@@ -20,6 +22,7 @@ function App() {
         }, 1000);
       } else if (timer === 0) {
         setIsRunning(false);
+        wordCounter(text);
       }
        }, [isRunning, timer]);
 
@@ -32,7 +35,7 @@ function App() {
         />
         <h4>Time left: {timer}</h4>
         <button onClick={() => setIsRunning(true)}>Start</button>
-        <h1>Words: 0</h1>
+        <h1>Words: {count}</h1>
     </>
   );
 }
