@@ -3,8 +3,10 @@ import './App.css';
 
 function App() {
 
+  const STARTING_TIME = 10;
+
     const [text, setText] = useState("");
-    const [timer, setTimer] = useState(5);
+    const [timer, setTimer] = useState(STARTING_TIME);
     const [isRunning, setIsRunning] = useState(false);
     const [count, setCount] = useState(0);
  
@@ -13,9 +15,14 @@ function App() {
       const wordCount = wordArr.filter(word => word !== '').length;
       setCount(wordCount);
     };
+
+    const startGame = () => {
+      setIsRunning(true);
+        setTimer(STARTING_TIME);
+        setCount(0);
+    };
     
     useEffect(() => { 
-      
       if (timer > 0 && isRunning){
         setTimeout(() => {
           setTimer(prevState => prevState -1)
@@ -30,11 +37,17 @@ function App() {
     <>
         <h1>Title</h1>
         <textarea
-        value={text}
-        onChange={(e) => setText(e.target.value)}
+          disabled={!isRunning}
+          value={text}
+          onChange={(e) => setText(e.target.value)}
         />
         <h4>Time left: {timer}</h4>
-        <button onClick={() => setIsRunning(true)}>Start</button>
+        <button 
+          disabled={isRunning}
+          onClick={startGame}
+        >
+           Start
+        </button>
         <h1>Words: {count}</h1>
     </>
   );
