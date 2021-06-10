@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 
 function App() {
@@ -9,7 +9,8 @@ function App() {
     const [timer, setTimer] = useState(STARTING_TIME);
     const [isRunning, setIsRunning] = useState(false);
     const [count, setCount] = useState(0);
- 
+    const textareaRef = useRef(null);
+
     const wordCounter = (text) => {
       const wordArr = text.trim().split(' ');
       const wordCount = wordArr.filter(word => word !== '').length;
@@ -17,9 +18,11 @@ function App() {
     };
 
     const startGame = () => {
-      setIsRunning(true);
+        setIsRunning(true);
         setTimer(STARTING_TIME);
         setCount(0);
+        textareaRef.current.disabled = false;
+        textareaRef.current.focus();
     };
     
     useEffect(() => { 
@@ -35,8 +38,9 @@ function App() {
 
   return (
     <>
-        <h1>Title</h1>
+        <h1>Type as many words as you can</h1>
         <textarea
+          ref={textareaRef}
           disabled={!isRunning}
           value={text}
           onChange={(e) => setText(e.target.value)}
