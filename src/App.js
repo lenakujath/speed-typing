@@ -1,40 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import './App.css';
+import useLogic from './useLogic';
 
 function App() {
 
-  const STARTING_TIME = 10;
-
-    const [text, setText] = useState("");
-    const [timer, setTimer] = useState(STARTING_TIME);
-    const [isRunning, setIsRunning] = useState(false);
-    const [count, setCount] = useState(0);
-    const textareaRef = useRef(null);
-
-    const wordCounter = (text) => {
-      const wordArr = text.trim().split(' ');
-      const wordCount = wordArr.filter(word => word !== '').length;
-      setCount(wordCount);
-    };
-
-    const startGame = () => {
-        setIsRunning(true);
-        setTimer(STARTING_TIME);
-        setCount(0);
-        textareaRef.current.disabled = false;
-        textareaRef.current.focus();
-    };
-    
-    useEffect(() => { 
-      if (timer > 0 && isRunning){
-        setTimeout(() => {
-          setTimer(prevState => prevState -1)
-        }, 1000);
-      } else if (timer === 0) {
-        setIsRunning(false);
-        wordCounter(text);
-      }
-       }, [isRunning, timer]);
+  const [text, timer, isRunning, count, textareaRef, startGame, changeText] = useLogic();
 
   return (
     <>
@@ -43,7 +13,7 @@ function App() {
           ref={textareaRef}
           disabled={!isRunning}
           value={text}
-          onChange={(e) => setText(e.target.value)}
+          onChange={(e) => changeText(e.target.value)}
         />
         <h4>Time left: {timer}</h4>
         <button 
