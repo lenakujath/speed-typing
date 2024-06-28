@@ -5,6 +5,7 @@ import useLogic from './useLogic';
 function App() {
 
   //commit checks
+  // further commit
 
   const [text, timer, isRunning, count, textareaRef, startGame, changeText] = useLogic();
 
