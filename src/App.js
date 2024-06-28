@@ -4,6 +4,8 @@ import useLogic from './useLogic';
 
 function App() {
 
+  //commit checks
+
   const [text, timer, isRunning, count, textareaRef, startGame, changeText] = useLogic();
 
   return (
